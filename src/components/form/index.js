@@ -4,13 +4,13 @@ import Input from 'rsuite/Input';
 import "rsuite/dist/rsuite.min.css"
 
 export default function Form( {handleApiCall} ) {
-  const [method, setmethod] = React.useState("");
+  const [method, setmethod] = React.useState("get");
 
   let handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
       url: e.target.url.value || "https://pokeapi.co/api/v2/pokemon",
-      json: e.target.JSON.value,
+      json: JSON.parse(e.target.JSON.value),
       method: method,
     };
     handleApiCall(formData)
@@ -18,30 +18,27 @@ export default function Form( {handleApiCall} ) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+   <form onSubmit={handleSubmit}>
         <label>
           <span>URL: </span>
           <input name="url" type="text" />
-         
           <button type="submit">GO!</button>
         </label>
         <label className="methods">
-          <span onClick={() => setmethod("GET")} id="get">
+          <span onClick={() => setmethod("get")} id="get">
             GET
           </span>
-          <span onClick={() => setmethod("POST")} id="post">
+          <span onClick={() => setmethod("post")} id="post">
             POST
           </span>
-          <span onClick={() => setmethod("PUT")} id="put">
+          <span onClick={() => setmethod("put")} id="put">
             PUT
           </span>
-          <span onClick={() => setmethod("DELETE")} id="delete">
+          <span onClick={() => setmethod("delete")} id="delete">
             DELETE
           </span>
         </label>
-
         <label htmlFor="w3review">JSON</label>
-
 <textarea id="w3review" name="JSON" rows="4" cols="50"/>
       </form>
     </>

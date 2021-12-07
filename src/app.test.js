@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-
 import App from './app';
 
 it('it can get the the method ', async () => {
@@ -9,6 +8,7 @@ it('it can get the the method ', async () => {
     let method = screen.getByTestId('method');
     expect(method).toHaveTextContent('Request Method:');
 });
+
 
 
 

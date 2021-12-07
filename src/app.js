@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./app.scss";
 
 // Let's talk about using index.js and some other name in the component folder
@@ -14,12 +14,11 @@ export default function App() {
   const [requestParams, setrequestParams] = useState({});
   const [data, setdata] = useState(null);
   let callApi = (requestParams) => {
-    setrequestParams(requestParams);
     let resObj = {};
-    axios.get(requestParams.url).then(res => {
+    axios[requestParams.method](requestParams.url,requestParams.json).then((res) => {
       resObj = {
-        count :res.data.count,
-        Headers:res.headers,
+        count: res.data.count  || res.data.length,
+        Headers: res.headers,
         body: res.data,
       };
       const data = {
@@ -29,13 +28,14 @@ export default function App() {
       setdata(data);
     });
 
-   
-   
   };
+  useEffect(() => {
+    setrequestParams(requestParams);
+  },[requestParams]);
   return (
     <React.Fragment>
       <Header />
-      <div data-testid='method'>Request Method: {requestParams.method}</div>
+      <div data-testid="method">Request Method: {requestParams.method}</div>
       <div>URL: {requestParams.url}</div>
       <Form handleApiCall={callApi} />
       <Results data={data} />
@@ -43,3 +43,5 @@ export default function App() {
     </React.Fragment>
   );
 }
+
+
